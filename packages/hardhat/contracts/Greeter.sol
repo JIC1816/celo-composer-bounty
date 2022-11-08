@@ -18,7 +18,10 @@ contract Greeter {
         return greeting;
     }
 
-    function setGreeting(string calldata _greeting) external {
+    function setGreeting(string memory _greeting) external {
+        if (bytes(_greeting).length < 5) {
+            revert("Greeting must be at least 5 characters long");
+        }
         console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
         emit newGreeting(_greeting, msg.sender);
